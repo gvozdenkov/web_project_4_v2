@@ -1,0 +1,25 @@
+.page__section {
+  background-color: rgb(20 20 20);
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  position: relative;
+}
+
+@media screen and (max-width: 1024px) {
+  .page__section {
+    width: calc(100% - 40px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page__section {
+    width: calc(100% - 30px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .page__section {
+    width: calc(100% - 15px);
+  }
+}
