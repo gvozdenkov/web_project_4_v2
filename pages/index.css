@@ -1,0 +1,25 @@
+@import url(../vendor/normalize.css);
+@import url(./common.css);
+
+/* Page */
+@import url(../blocks/page/page.css);
+@import url(../blocks/page/__content/page__content.css);
+@import url(../blocks/page/__section/page__section.css);
+
+/* Header */
+@import url(../blocks/header/header.css);
+
+
+@import url(../blocks/popup.css);
+@import url(../blocks/form.css);
+@import url(../blocks/logo.css);
+@import url(../blocks/nav.css);
+@import url(../blocks/burger-menu.css);
+@import url(../blocks/profile.css);
+@import url(../blocks/profile-header.css);
+@import url(../blocks/album.css);
+@import url(../blocks/album-container.css);
+@import url(../blocks/card.css);
+
+/* Footer */
+@import url(../blocks/footer/footer.css);   
