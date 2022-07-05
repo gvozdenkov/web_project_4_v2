@@ -1,0 +1,8 @@
+.popup__error-msg {
+  color: rgb(232, 12, 12);
+  font-size: 13px;
+  font-weight: 500;
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+}
