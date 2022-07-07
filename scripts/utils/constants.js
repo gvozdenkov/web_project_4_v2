@@ -38,6 +38,10 @@ export const cardListSelector = ".cards__list";
 
 // Popup
 export const popupIsOpenedClass = "popup_is-opened";
+export const popupSelector = ".popup";
+export const popupClass = "popup";
+export const popupCloseBtnClass = "popup__close-btn";
+export const ESC_KEY = "Escape";
 
 // PopupWithImage
 export const popupImageTypeSelector = ".popup_type_image";

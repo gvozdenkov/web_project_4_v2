@@ -12,6 +12,7 @@ import PopupWithImage from "../components/popupWithImage.js";
 const handleImageClick = (item) => {
   const popup = new PopupWithImage(item, popupImageTypeSelector);
   popup.open();
+
 };
 
 const renderCards = (item) => {
