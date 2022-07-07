@@ -4,7 +4,7 @@ import {
   cardTitleSelector,
   cardDeleteBtnSelector,
   cardLikeSelector,
-  cardIsLikedSelector,
+  cardIsLikedClass,
 } from "../utils/constants.js";
 
 export default class Card {
@@ -38,9 +38,10 @@ export default class Card {
   }
 
   _handleLikeCard() {
+    console.log(this._element.querySelector(cardLikeSelector));
     this._element
       .querySelector(cardLikeSelector)
-      .classList.toggle(cardIsLikedSelector);
+      .classList.toggle(cardIsLikedClass);
   }
 
   generateCard() {

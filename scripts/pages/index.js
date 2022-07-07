@@ -5,9 +5,18 @@ import {
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
+import Section from "../components/section.js";
 
-initialCards.forEach((item) => {
-  const card = new Card(item, cardTemplateSelector);
-  const cardElement = card.generateCard();
-  console.log(cardElement);
-});
+const defaultCardList = new Section(
+  {
+    data: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, cardTemplateSelector);
+      const cardElement = card.generateCard();
+      defaultCardList.setItem(cardElement);
+    },
+  },
+  cardListSelector
+);
+
+defaultCardList.renderItems();

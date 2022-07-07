@@ -32,6 +32,6 @@ export const cardImageSelector = ".card__image";
 export const cardTitleSelector = ".card__title";
 export const cardDeleteBtnSelector = ".card__delete-btn";
 export const cardLikeSelector = ".card__like-btn";
-export const cardIsLikedSelector = ".card__like-btn_is-active";
+export const cardIsLikedClass = "card__like-btn_is-active";
 
 export const cardListSelector = ".cards__list";
