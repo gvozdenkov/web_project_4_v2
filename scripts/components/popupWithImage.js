@@ -21,8 +21,5 @@ export default class PopupWithImage extends Popup {
 
   close() {
     super.close();
-    this._popup.querySelector(popupImageSelector).src = "";
-    this._popup.querySelector(popupImageSelector).alt = "";
-    this._popup.querySelector(popupCaptionSelector).textContent = "";
   }
 }
