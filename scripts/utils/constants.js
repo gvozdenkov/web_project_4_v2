@@ -40,5 +40,6 @@ export const cardListSelector = ".cards__list";
 export const popupIsOpenedClass = "popup_is-opened";
 
 // PopupWithImage
+export const popupImageTypeSelector = ".popup_type_image";
 export const popupImageSelector = ".popup__image";
 export const popupCaptionSelector = ".popup__caption";

@@ -8,10 +8,11 @@ import {
 } from "../utils/constants.js";
 
 export default class Card {
-  constructor({ name, link }, cardSelector) {
+  constructor({ name, link }, { cardSelector, handleImageClick }) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    this._handleImageClick = handleImageClick;
   }
 
   _getTemplate() {
@@ -31,6 +32,12 @@ export default class Card {
     this._element
       .querySelector(cardLikeSelector)
       .addEventListener("click", () => this._handleLikeCard());
+
+    this._element
+      .querySelector(cardImageSelector)
+      .addEventListener("click", () =>
+        this._handleImageClick({ name: this._name, link: this._link })
+      );
   }
 
   _handleDeleteCard() {
