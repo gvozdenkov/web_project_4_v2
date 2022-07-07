@@ -35,3 +35,10 @@ export const cardLikeSelector = ".card__like-btn";
 export const cardIsLikedClass = "card__like-btn_is-active";
 
 export const cardListSelector = ".cards__list";
+
+// Popup
+export const popupIsOpenedClass = "popup_is-opened";
+
+// PopupWithImage
+export const popupImageSelector = ".popup__image";
+export const popupCaptionSelector = ".popup__caption";
