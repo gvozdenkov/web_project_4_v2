@@ -45,7 +45,6 @@ export default class Card {
   }
 
   _handleLikeCard() {
-    console.log(this._element.querySelector(cardLikeSelector));
     this._element
       .querySelector(cardLikeSelector)
       .classList.toggle(cardIsLikedClass);
