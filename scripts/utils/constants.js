@@ -47,3 +47,19 @@ export const ESC_KEY = "Escape";
 export const popupImageTypeSelector = ".popup_type_image";
 export const popupImageSelector = ".popup__image";
 export const popupCaptionSelector = ".popup__caption";
+
+// PopupWithForm
+export const popupEditProfileSelector = ".popup_type_edit";
+export const popupAddCardSelector = ".popup_type_new-card";
+
+// Form
+export const formSelector = ".form";
+export const formInputSelector = ".form__input";
+
+// Dom Elements
+export const editProfileBtn = document.querySelector(".profile__edit-btn");
+export const addCardBtn = document.querySelector(".profile__add-btn");
+export const profileTitle = document.querySelector(".profile__title");
+export const profileDescription = document.querySelector(
+  ".profile__description"
+);
