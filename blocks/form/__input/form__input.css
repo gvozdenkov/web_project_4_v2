@@ -1,4 +1,4 @@
-.popup__input{
+.form__input{
     padding: 0;
     padding-bottom: 8px;
     border: none;
@@ -6,7 +6,7 @@
     transition: 0.3s ease-out;
 }
 
-.popup__input:focus{
+.form__input:focus{
     outline: none;
     border-bottom-color: rgba(0 0 0 / 1);
 }

@@ -1,4 +1,4 @@
-.popup__button {
+.form__button {
   height: 50px;
   border: none;
   background-color: black;
@@ -9,8 +9,8 @@
   user-select: none;
 }
 
-.popup__button:hover,
-.popup__button:focus {
+.form__button:hover,
+.form__button:focus {
   background-color: rgba(0 0 0 / 0.8);
   outline: none;
 }
