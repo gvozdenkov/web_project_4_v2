@@ -25,6 +25,17 @@ export const initialCards = [
   },
 ];
 
+export const formConfig = {
+  formSelector: ".form",
+  labelSelector: ".form__field",
+  inputSelector: ".form__input",
+  inputErrorSelector: ".form__error-msg",
+  inputErrorClass: "form__input_type_error",
+  messsageErrorClass: "form__error-msg_visible",
+  submitButtonSelector: ".form__button_type_submit",
+  inactiveButtonClass: "form__button_disabled",
+};
+
 // Card template
 export const cardTemplateSelector = ".card-template";
 export const cardSelector = ".card";

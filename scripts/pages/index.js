@@ -9,6 +9,7 @@ import {
   addCardBtn,
   userNameSelector,
   userDescriptionSelector,
+  formConfig,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
@@ -16,6 +17,7 @@ import Section from "../components/section.js";
 import PopupWithImage from "../components/popupWithImage.js";
 import PopupWithForm from "../components/popupWithForm.js";
 import UserInfo from "../components/userInfo.js";
+import FormValidation from "../components/formValidation.js";
 
 // ============== Card ====================
 const imagePopup = new PopupWithImage(popupImageTypeSelector);
@@ -85,3 +87,9 @@ const userNameInputElement = document.querySelector(".form__input_type_name");
 const userDescriptionInputElement = document.querySelector(
   ".form__input_type_description"
 );
+
+const editProfileFormValidator = new FormValidation(
+  formConfig,
+  popupEditProfileSelector
+);
+editProfileFormValidator.enableValidation();
