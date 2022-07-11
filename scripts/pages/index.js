@@ -7,14 +7,15 @@ import {
   editProfileBtn,
   popupAddCardSelector,
   addCardBtn,
-  profileTitle,
-  profileDescription,
+  userNameSelector,
+  userDescriptionSelector,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
 import Section from "../components/section.js";
 import PopupWithImage from "../components/popupWithImage.js";
 import PopupWithForm from "../components/popupWithForm.js";
+import UserInfo from "../components/userInfo.js";
 
 // ============== Card ====================
 const imagePopup = new PopupWithImage(popupImageTypeSelector);
@@ -35,17 +36,18 @@ const CardList = new Section(
 );
 
 // ============== Edit Profile ==============
-const editProfileSubmit = (formData) => {
-  profileTitle.textContent = formData.name;
-  profileDescription.innerText = formData.description;
-};
-
 const editProfilePopup = new PopupWithForm({
   popupSelector: popupEditProfileSelector,
-  handleFormSubmit: editProfileSubmit,
+  handleFormSubmit: (formData) => {
+    userProfile.setUserInfo(formData);
+  },
 });
 
 editProfileBtn.addEventListener("click", () => {
+  const currentUserData = userProfile.getUserInfo();
+  console.log(currentUserData);
+  userNameInputElement.value = currentUserData.name;
+  userDescriptionInputElement.value = currentUserData.description;
   editProfilePopup.open();
 });
 
@@ -65,8 +67,21 @@ addCardBtn.addEventListener("click", () => {
   addCardPopup.open();
 });
 
+// ============== UserInfo =====================
+const userProfile = new UserInfo({
+  nameSelector: userNameSelector,
+  descriptionSelector: userDescriptionSelector,
+});
+
 // ============== Render All Cards ==============
 CardList.renderItems(initialCards);
+
 addCardPopup.setEventListeners();
 editProfilePopup.setEventListeners();
 imagePopup.setEventListeners();
+
+// DOM elements only for index.html
+const userNameInputElement = document.querySelector(".form__input_type_name");
+const userDescriptionInputElement = document.querySelector(
+  ".form__input_type_description"
+);

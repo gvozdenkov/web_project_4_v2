@@ -63,3 +63,5 @@ export const profileTitle = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(
   ".profile__description"
 );
+export const userNameSelector = ".profile__title";
+export const userDescriptionSelector = ".profile__description";
