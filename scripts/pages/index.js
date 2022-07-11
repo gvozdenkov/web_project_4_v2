@@ -45,14 +45,6 @@ const editProfilePopup = new PopupWithForm({
   },
 });
 
-editProfileBtn.addEventListener("click", () => {
-  const currentUserData = userProfile.getUserInfo();
-  console.log(currentUserData);
-  userNameInputElement.value = currentUserData.name;
-  userDescriptionInputElement.value = currentUserData.description;
-  editProfilePopup.open();
-});
-
 // ============== Add new Place ==============
 const addCardPopup = new PopupWithForm({
   popupSelector: popupAddCardSelector,
@@ -65,15 +57,23 @@ const addCardPopup = new PopupWithForm({
   },
 });
 
-addCardBtn.addEventListener("click", () => {
-  addCardPopup.open();
-});
-
 // ============== UserInfo =====================
 const userProfile = new UserInfo({
   nameSelector: userNameSelector,
   descriptionSelector: userDescriptionSelector,
 });
+
+// ============== Form Validation ==============
+
+const editProfileFormValidator = new FormValidation(
+  formConfig,
+  popupEditProfileSelector
+);
+
+const addCardFormValidator = new FormValidation(
+  formConfig,
+  popupAddCardSelector
+);
 
 // ============== Render All Cards ==============
 CardList.renderItems(initialCards);
@@ -82,14 +82,23 @@ addCardPopup.setEventListeners();
 editProfilePopup.setEventListeners();
 imagePopup.setEventListeners();
 
+addCardFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
+
 // DOM elements only for index.html
 const userNameInputElement = document.querySelector(".form__input_type_name");
 const userDescriptionInputElement = document.querySelector(
   ".form__input_type_description"
 );
 
-const editProfileFormValidator = new FormValidation(
-  formConfig,
-  popupEditProfileSelector
-);
-editProfileFormValidator.enableValidation();
+// ============= Listeners on the page ====================
+editProfileBtn.addEventListener("click", () => {
+  const currentUserData = userProfile.getUserInfo();
+  userNameInputElement.value = currentUserData.name;
+  userDescriptionInputElement.value = currentUserData.description;
+  editProfilePopup.open();
+});
+
+addCardBtn.addEventListener("click", () => {
+  addCardPopup.open();
+});
