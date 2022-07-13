@@ -10,7 +10,6 @@
     />
     <meta name="author" content="Arty Gvozdenkov" />
     <meta name="keyword" content="photo album, share photo" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <title>Around the US</title>
   </head>
@@ -18,7 +17,7 @@
     <div class="page__content">
       <header class="header page__section">
         <img
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="Around the US logo"
           class="header__logo"
         />
@@ -27,7 +26,7 @@
         <section class="profile page__section">
           <div class="profile__left">
             <img
-              src="./images/avatar_200px.jpg"
+              src="<%=require('./images/avatar_200px.jpg')%>"
               alt="profile image"
               class="profile__image"
             />
@@ -161,6 +160,5 @@
         </li>
       </template>
     </div>
-    <script type="module" src="./scripts/pages/index.js"></script>
   </body>
 </html>

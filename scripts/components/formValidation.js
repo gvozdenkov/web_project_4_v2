@@ -44,7 +44,6 @@ export default class FormValidation {
       this._popup.querySelectorAll(this._inputSelector)
     );
     this._submitBtn = this._popup.querySelector(this._submitButtonSelector);
-    console.log(this._submitButtonSelector);
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._isValid(inputElement);
