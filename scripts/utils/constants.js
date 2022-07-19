@@ -36,6 +36,12 @@ export const formConfig = {
   inactiveButtonClass: "form__button_disabled",
 };
 
+export const profileConfig = {
+  profileTitle: "profile__title",
+  profileDescription: "profile__description",
+  profileAvatar: "profile__image",
+};
+
 // Card template
 export const cardTemplateSelector = ".card-template";
 export const cardSelector = ".card";

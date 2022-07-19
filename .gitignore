@@ -1,2 +1,3 @@
 node_modules
 dist
+scripts/utils/settings.js

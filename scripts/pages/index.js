@@ -9,9 +9,8 @@ import {
   editProfileBtn,
   popupAddCardSelector,
   addCardBtn,
-  userNameSelector,
-  userDescriptionSelector,
   formConfig,
+  profileConfig,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
@@ -20,6 +19,8 @@ import PopupWithImage from "../components/popupWithImage.js";
 import PopupWithForm from "../components/popupWithForm.js";
 import UserInfo from "../components/userInfo.js";
 import FormValidation from "../components/formValidation.js";
+import { connection } from "../utils/settings";
+import Api from "../components/api.js";
 
 // ============== Card ====================
 const imagePopup = new PopupWithImage(popupImageTypeSelector);
@@ -43,7 +44,7 @@ const CardList = new Section(
 const editProfilePopup = new PopupWithForm({
   popupSelector: popupEditProfileSelector,
   handleFormSubmit: (formData) => {
-    userProfile.setUserInfo(formData);
+    userInfo.setUserInfo(formData);
   },
 });
 
@@ -60,9 +61,10 @@ const addCardPopup = new PopupWithForm({
 });
 
 // ============== UserInfo =====================
-const userProfile = new UserInfo({
-  nameSelector: userNameSelector,
-  descriptionSelector: userDescriptionSelector,
+const userInfo = new UserInfo({
+  nameSelector: profileConfig.profileTitle,
+  descriptionSelector: profileConfig.profileDescription,
+  avatarSelector: profileConfig.profileAvatar,
 });
 
 // ============== Form Validation ==============
@@ -95,7 +97,7 @@ const userDescriptionInputElement = document.querySelector(
 
 // ============= Listeners on the page ====================
 editProfileBtn.addEventListener("click", () => {
-  const currentUserData = userProfile.getUserInfo();
+  const currentUserData = userInfo.getUserInfo();
   userNameInputElement.value = currentUserData.name;
   userDescriptionInputElement.value = currentUserData.description;
   editProfilePopup.open();
@@ -104,3 +106,21 @@ editProfileBtn.addEventListener("click", () => {
 addCardBtn.addEventListener("click", () => {
   addCardPopup.open();
 });
+
+const api = new Api({
+  adress: connection.adress,
+  token: connection.token,
+  group: connection.group,
+});
+
+api
+  .getApiInfo()
+  .then(([userData, cardList]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      description: userData.about,
+      avatar: userData.avatar,
+    });
+    console.log("get data -> ", userData);
+  })
+  .catch((err) => console.log(err));
