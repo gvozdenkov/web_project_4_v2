@@ -11,6 +11,7 @@ import {
   addCardBtn,
   formConfig,
   profileConfig,
+  popupAvatarSelector,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
@@ -21,6 +22,13 @@ import UserInfo from "../components/userInfo.js";
 import FormValidation from "../components/formValidation.js";
 import { connection } from "../utils/settings";
 import Api from "../components/api.js";
+
+// DOM elements only for index.html
+const userNameInputElement = document.querySelector(".form__input_type_name");
+const userDescriptionInputElement = document.querySelector(
+  ".form__input_type_description"
+);
+const openAvatarFormBtn = document.querySelector(".profile__image");
 
 // ============== Card ====================
 const imagePopup = new PopupWithImage(popupImageTypeSelector);
@@ -40,15 +48,49 @@ const CardList = new Section(
   cardListSelector
 );
 
-// ============== Edit Profile ==============
+// ============== Edit Profile Popup ==============
 const editProfilePopup = new PopupWithForm({
   popupSelector: popupEditProfileSelector,
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData);
+    api
+      .setUserInfo({
+        name: formData.name,
+        about: formData.about,
+      })
+      .then((info) =>
+        userInfo.setUserInfo({
+          name: info.name,
+          about: info.about,
+        })
+      )
+      .catch((err) => console.log(err))
+      .finally(() => {
+        editProfilePopup.close();
+      });
   },
 });
 
-// ============== Add new Place ==============
+const editAvatarPopup = new PopupWithForm({
+  popupSelector: popupAvatarSelector,
+  handleFormSubmit: (formData) => {
+    api
+      .setUserAvatar({
+        avatar: formData.avatar,
+      })
+      .then((avatar) => {
+        console.log("test -> ", avatar);
+        userInfo.setUserInfo({
+          avatar: avatar,
+        });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => editAvatarPopup.close());
+  },
+});
+
+editAvatarPopup.setEventListeners();
+
+// ============== Add new Place Popup ==============
 const addCardPopup = new PopupWithForm({
   popupSelector: popupAddCardSelector,
   handleFormSubmit: (data) => {
@@ -79,6 +121,11 @@ const addCardFormValidator = new FormValidation(
   popupAddCardSelector
 );
 
+const editAvatarFormValidator = new FormValidation(
+  formConfig,
+  popupAvatarSelector
+);
+
 // ============== Render All Cards ==============
 CardList.renderItems(initialCards);
 
@@ -88,12 +135,7 @@ imagePopup.setEventListeners();
 
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
-
-// DOM elements only for index.html
-const userNameInputElement = document.querySelector(".form__input_type_name");
-const userDescriptionInputElement = document.querySelector(
-  ".form__input_type_description"
-);
+editAvatarFormValidator.enableValidation();
 
 // ============= Listeners on the page ====================
 editProfileBtn.addEventListener("click", () => {
@@ -107,6 +149,9 @@ addCardBtn.addEventListener("click", () => {
   addCardPopup.open();
 });
 
+openAvatarFormBtn.addEventListener("click", () => editAvatarPopup.open());
+
+// ============= API =================================
 const api = new Api({
   adress: connection.adress,
   token: connection.token,
@@ -118,9 +163,18 @@ api
   .then(([userData, cardList]) => {
     userInfo.setUserInfo({
       name: userData.name,
-      description: userData.about,
+      about: userData.about,
       avatar: userData.avatar,
     });
-    console.log("get data -> ", userData);
+    // console.log("get data -> ", userData);
+    // console.log("CardList -> ", cardList);
   })
   .catch((err) => console.log(err));
+
+fetch("https://around.nomoreparties.co/cohort-1-es/users/me/avatar", {
+  headers: {
+    authorization: connection.token,
+  },
+})
+  .then((data) => data.json())
+  .then((data) => console.log(data));

@@ -76,7 +76,7 @@
               <input
                 class="form__input form__input_type_description"
                 type="text"
-                name="description"
+                name="about"
                 id=""
                 placeholder="Description"
                 required
@@ -119,6 +119,31 @@
                 required
                 minlength="2"
                 maxlength="40"
+              />
+              <span class="form__error-msg"></span>
+            </label>
+            <button
+              type="submit"
+              class="button form__button form__button_type_submit"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Edit Avatar Popup -->
+      <div class="popup popup_type_avatar">
+        <div class="popup__content">
+          <button class="popup__close-btn"></button>
+          <h3 class="popup__title">Change profile image</h3>
+          <form action="" class="form" id="avatar-form" novalidate>
+            <label class="form__field">
+              <input
+                class="form__input"
+                type="url"
+                name="avatar"
+                placeholder="Avatar URL here"
+                required
               />
               <span class="form__error-msg"></span>
             </label>

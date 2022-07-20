@@ -68,6 +68,7 @@ export const popupCaptionSelector = ".popup__caption";
 // PopupWithForm
 export const popupEditProfileSelector = ".popup_type_edit";
 export const popupAddCardSelector = ".popup_type_new-card";
+export const popupAvatarSelector = ".popup_type_avatar";
 
 // Form
 export const formSelector = ".form";

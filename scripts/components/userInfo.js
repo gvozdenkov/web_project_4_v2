@@ -10,14 +10,14 @@ export default class UserInfo {
   getUserInfo() {
     return {
       name: this._nameElement.textContent,
-      description: this._descriptionElement.innerText,
+      description: this._descriptionElement.textContent,
       avatar: this._avatarElement.style.backgroundImage,
     };
   }
 
-  setUserInfo({ name, description, avatar }) {
+  setUserInfo({ name, about, avatar }) {
     if (name) this._nameElement.textContent = name;
-    if (description) this._descriptionElement.innerText = description;
+    if (about) this._descriptionElement.innerText = about;
     if (avatar) this._avatarElement.style.backgroundImage = `url(${avatar})`;
   }
 }
