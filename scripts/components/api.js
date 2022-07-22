@@ -60,6 +60,54 @@ export default class Api {
     );
   }
 
+  addCard({ name, link }) {
+    return fetch(`${this._adress}/${this._group}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then((data) => data.json());
+  }
+
+  deleteCard(id) {
+    return fetch(`${this._adress}/${this._group}/cards/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._token,
+      },
+    }).then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(
+            `Error ${res.status} on delete card: ${res.statusText}`
+          )
+    );
+  }
+
+  changeLikeStatus(id, liked) {
+    return fetch(`${this._adress}/${this._group}/cards/likes/${id}`, {
+      method: liked ? "DELETE" : "PUT",
+      headers: {
+        authorization: this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        _id: id,
+      }),
+    }).then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(
+            `Error ${res.status}, upload user info: ${res.statusText}`
+          )
+    );
+  }
+
   getCardList() {
     return fetch(`${this._adress}/${this._group}/cards`, {
       headers: {

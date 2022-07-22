@@ -12,6 +12,8 @@ import {
   formConfig,
   profileConfig,
   popupAvatarSelector,
+  cardLikeSelector,
+  cardIsLikedClass,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
@@ -33,17 +35,35 @@ const openAvatarFormBtn = document.querySelector(".profile__image");
 // ============== Card ====================
 const imagePopup = new PopupWithImage(popupImageTypeSelector);
 
-const renderCards = (item) => {
-  const card = new Card(item, {
-    cardSelector: cardTemplateSelector,
-    handleImageClick: () => imagePopup.open(item),
-  });
-  CardList.addItem(card.generateCard());
+const createCard = (cardData) => {
+  const card = new Card(
+    {
+      data: { ...cardData },
+      handleImageClick: () => imagePopup.open(cardData),
+      handleDeleteCard: (card) => {
+        api
+          .deleteCard(card.id())
+          .then(() => {
+            card.deleteCard();
+          })
+          .catch((err) => console.log(err));
+      },
+      handleLikeClick: (card) => {
+        api.changeLikeStatus(card.id(), card.isLiked()).then((data) => {
+          card.setLikeInfo(data);
+        });
+      },
+    },
+    cardTemplateSelector
+  );
+  return card.generateCard();
 };
 
-const CardList = new Section(
+const cardList = new Section(
   {
-    renderer: renderCards,
+    renderer: (data) => {
+      cardList.addItem(createCard(data));
+    },
   },
   cardListSelector
 );
@@ -94,11 +114,16 @@ editAvatarPopup.setEventListeners();
 const addCardPopup = new PopupWithForm({
   popupSelector: popupAddCardSelector,
   handleFormSubmit: (data) => {
-    const card = new Card(data, {
-      cardSelector: cardTemplateSelector,
-      handleImageClick: () => imagePopup.open(data),
-    });
-    CardList.addItem(card.generateCard());
+    api
+      .addCard({
+        name: data.name,
+        link: data.link,
+      })
+      .then((data) => {
+        cardList.addItem(createCard(data));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => addCardPopup.close());
   },
 });
 
@@ -127,7 +152,7 @@ const editAvatarFormValidator = new FormValidation(
 );
 
 // ============== Render All Cards ==============
-CardList.renderItems(initialCards);
+// cardList.renderItems(initialCards);
 
 addCardPopup.setEventListeners();
 editProfilePopup.setEventListeners();
@@ -160,21 +185,21 @@ const api = new Api({
 
 api
   .getApiInfo()
-  .then(([userData, cardList]) => {
+  .then(([userData, cardsArray]) => {
     userInfo.setUserInfo({
       name: userData.name,
       about: userData.about,
       avatar: userData.avatar,
     });
-    // console.log("get data -> ", userData);
-    // console.log("CardList -> ", cardList);
+
+    cardList.renderItems(cardsArray);
   })
   .catch((err) => console.log(err));
 
-fetch("https://around.nomoreparties.co/cohort-1-es/users/me/avatar", {
+fetch("http://es.nomoreparties.co/v1/cohort-1-es/cards", {
   headers: {
     authorization: connection.token,
   },
 })
   .then((data) => data.json())
-  .then((data) => console.log(data));
+  .then((data) => console.table(data));

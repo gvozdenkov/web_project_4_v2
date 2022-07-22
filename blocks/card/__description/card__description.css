@@ -1,5 +1,6 @@
 .card__description {
   background-color: white;
+  color: black;
   width: 100%;
   box-sizing: border-box;
   display: flex;

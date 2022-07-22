@@ -5,14 +5,24 @@ import {
   cardDeleteBtnSelector,
   cardLikeSelector,
   cardIsLikedClass,
+  cardLikeCountSelector,
 } from "../utils/constants.js";
 
 export default class Card {
-  constructor({ name, link }, { cardSelector, handleImageClick }) {
-    this._name = name;
-    this._link = link;
-    this._cardSelector = cardSelector;
+  constructor(
+    { data, handleImageClick, handleDeleteCard, handleLikeClick },
+    cardSelector
+  ) {
+    this._name = data.name;
+    this._link = data.link;
+    this._likes = data.likes;
+    this._cardId = data._id;
+    this._userId = data.currentUserId;
+    this._ownerId = data.owner._id;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteCard = handleDeleteCard;
+    this._handleLikeClick = handleLikeClick;
+    this._cardSelector = cardSelector;
   }
 
   _getTemplate() {
@@ -25,13 +35,14 @@ export default class Card {
   }
 
   _setEventListeners() {
+    
     this._element
       .querySelector(cardDeleteBtnSelector)
-      .addEventListener("click", () => this._handleDeleteCard());
+      .addEventListener("click", () => this._handleDeleteCard(this));
 
     this._element
       .querySelector(cardLikeSelector)
-      .addEventListener("click", () => this._handleLikeCard());
+      .addEventListener("click", () => this._handleLikeClick(this));
 
     this._element
       .querySelector(cardImageSelector)
@@ -40,19 +51,42 @@ export default class Card {
       );
   }
 
-  _handleDeleteCard() {
+  deleteCard() {
     this._element.remove();
   }
 
-  _handleLikeCard() {
-    this._element
-      .querySelector(cardLikeSelector)
-      .classList.toggle(cardIsLikedClass);
+  id() {
+    return this._cardId;
+  }
+
+  isLiked() {
+    return Boolean(this._likes.find((item) => item._id === this._ownerId));
+  }
+
+  _updateLikes() {
+    this._element.querySelector(`.${cardLikeCountSelector}`).textContent =
+      this._likes.length;
+
+    this.isLiked()
+      ? this._element
+          .querySelector(`${cardLikeSelector}`)
+          .classList.add(`${cardIsLikedClass}`)
+      : this._element
+          .querySelector(`${cardLikeSelector}`)
+          .classList.remove(`${cardIsLikedClass}`);
+  }
+
+  setLikeInfo(cardData) {
+    this._likes = cardData.likes;
+    this._updateLikes();
   }
 
   generateCard() {
     this._element = this._getTemplate();
+    this._updateLikes();
     this._setEventListeners();
+
+    // this._element.querySelector(cardDeleteBtnSelector).classList.add(this._ownerId === )
 
     this._element.querySelector(cardImageSelector).src = this._link;
     this._element.querySelector(cardImageSelector).alt = this._name;
