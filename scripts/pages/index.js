@@ -14,6 +14,7 @@ import {
   popupAvatarSelector,
   cardLikeSelector,
   cardIsLikedClass,
+  popupDeleteConfirmSelector,
 } from "../utils/constants.js";
 
 import Card from "../components/card.js";
@@ -24,6 +25,7 @@ import UserInfo from "../components/userInfo.js";
 import FormValidation from "../components/formValidation.js";
 import { connection } from "../utils/settings";
 import Api from "../components/api.js";
+import PopupWithFormSubmit from "../components/popupWithFormSubmit";
 
 // DOM elements only for index.html
 const userNameInputElement = document.querySelector(".form__input_type_name");
@@ -41,12 +43,16 @@ const createCard = (cardData) => {
       data: { ...cardData },
       handleImageClick: () => imagePopup.open(cardData),
       handleDeleteCard: (card) => {
-        api
-          .deleteCard(card.id())
-          .then(() => {
-            card.deleteCard();
-          })
-          .catch((err) => console.log(err));
+        deletePopup.open();
+        deletePopup.setSubmiteAction(() => {
+          api
+            .deleteCard(card.id())
+            .then(() => {
+              card.deleteCard();
+            })
+            .catch((err) => console.log(err))
+            .finally(() => deletePopup.close());
+        });
       },
       handleLikeClick: (card) => {
         api.changeLikeStatus(card.id(), card.isLiked()).then((data) => {
@@ -67,6 +73,8 @@ const cardList = new Section(
   },
   cardListSelector
 );
+
+const deletePopup = new PopupWithFormSubmit(popupDeleteConfirmSelector);
 
 // ============== Edit Profile Popup ==============
 const editProfilePopup = new PopupWithForm({
@@ -98,7 +106,6 @@ const editAvatarPopup = new PopupWithForm({
         avatar: formData.avatar,
       })
       .then((avatar) => {
-        console.log("test -> ", avatar);
         userInfo.setUserInfo({
           avatar: avatar,
         });
@@ -157,6 +164,7 @@ const editAvatarFormValidator = new FormValidation(
 addCardPopup.setEventListeners();
 editProfilePopup.setEventListeners();
 imagePopup.setEventListeners();
+deletePopup.setEventListeners();
 
 addCardFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();

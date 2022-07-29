@@ -52,7 +52,6 @@ export const cardLikeSelector = ".card__like-btn";
 export const cardIsLikedClass = "card__like-btn_is-active";
 export const cardLikeCountSelector = "card__likes-count";
 
-
 export const cardListSelector = ".cards__list";
 
 // Popup
@@ -71,6 +70,7 @@ export const popupCaptionSelector = ".popup__caption";
 export const popupEditProfileSelector = ".popup_type_edit";
 export const popupAddCardSelector = ".popup_type_new-card";
 export const popupAvatarSelector = ".popup_type_avatar";
+export const popupDeleteConfirmSelector = ".popup_type_delete";
 
 // Form
 export const formSelector = ".form";
